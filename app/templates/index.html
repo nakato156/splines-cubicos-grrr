@@ -1,14 +1,87 @@
 <!Doctype HTML>
 <html>
-    <head>
-        <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
-    </head>
-    <body>
-        <h2>
-            hola
-        </h2>
-    </body>
-    <footer>
 
-    </footer>
+<head>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+</head>
+
+<body
+    class="absolute top-0 z-[-2] h-full w-full bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
+    <header class="text-white text-center mb-6 mt-6">
+        <h1 class="text-3xl font-bold tracking-tight">
+            Spline Cubico
+        </h1>
+        <p class="text-gray-500 dark:text-gray-400">
+            Muestra la gráfica de un spline cubico.
+        </p>
+    </header>
+    <div class="px-4 py-8 md:py-18 lg:px-6">
+        <div class="grid grid-cols-6 md:grid-cols-8 gap-2">
+            <div class="text-white grid grid-rows-2 col-span-1 md:col-span-2 justify-center">
+                <div>
+                    <label for="points" class="text-sm font-medium">Numero de puntos</label>
+                    <input
+                        class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[100px]"
+                        id="points" placeholder="0" min="2" type="number">
+                </div>
+                <div class="flex items-center gap-2">
+                    <button
+                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md border-emerald-400 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-emerald-400/70 px-4 py-2 h-[36px]">
+                        Generar Puntos
+                    </button>
+                </div>
+            </div>
+            <div class="text-white col-span-5 md:col-span-6 bg-yellow-400 justify-start">
+                <div class="flex h-full items-center justify-start">
+                    <div class="overflow-x-auto">
+                        <table class="w-full shadow-md rounded-xl">
+                            <tbody id="bodyTablePuntos" class="text-blue-gray-900">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto prose lg:prose-lg max-w-none text-white">
+            <div class="flex gap-4">
+
+            </div>
+            <div class="flex items-center gap-2 mt-2">
+                <div class="flex items-center">
+                    <label class="mr-2">Condiciones naturales?</label>
+                    <div class="flex items-center">
+                        <input type="radio" id="opcion1" name="radioGroup"
+                            class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" checked>
+                        <label for="opcion1" class="ml-1">Opción 1</label>
+                    </div>
+                    <div class="flex items-center ml-4">
+                        <input type="radio" id="opcion2" name="radioGroup"
+                            class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <label for="opcion2" class="ml-1">Opción 2</label>
+                    </div>
+                    <div class="flex items-center ml-4">
+                        <input type="radio" id="opcion3" name="radioGroup"
+                            class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <label for="opcion3" class="ml-1">Opción 3</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-white flex justify-center items-center">
+            <button id="btn-graficar"
+                class="inline-flex items-center justify-center whitespace-nowrap border border-emerald-400 rounded-md text-sm font-medium transition-colors disabled:opacity-50 text-primary-foreground hover:bg-emerald-400/90 px-4 py-2 h-[36px]">
+                Graficar spline
+            </button>
+        </div>
+        <div class="w-[70%] h-[70%] m-auto">
+            <canvas id="myChart" class="text-white"></canvas>
+        </div>
+    </div>
+</body>
+<footer>
+
+</footer>
+
 </html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{url_for('static', filename='js/index.js')}}"></script>
