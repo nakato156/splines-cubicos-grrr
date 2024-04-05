@@ -31,14 +31,14 @@ def interpolacion(pares:np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     xs = np.arange(p_min, p_max + 0.1, 0.1)
     S = sc(xs)
 
-    fig, ax = plt.subplots(figsize=(6.5, 4))
-    ax.plot(x, y, 'o', label='data')
-    ax.plot(xs, S, label="S")
+    # fig, ax = plt.subplots(figsize=(6.5, 4))
+    # ax.plot(x, y, 'o', label='data')
+    # ax.plot(xs, S, label="S")
     # ax.plot(xs, sc(xs, 1), label="S'")
     # ax.plot(xs, sc(xs, 2), label="S''")
 
-    ax.set_xlim(-0.5, p_max + 5)
-    ax.legend(loc='lower left', ncol=2)
-    plt.savefig("interpolacion.png")
+    # ax.set_xlim(-0.5, p_max + 5)
+    # ax.legend(loc='lower left', ncol=2)
+    # plt.savefig("interpolacion.png")
 
     return xs, S

@@ -1,8 +1,15 @@
 document.addEventListener("DOMContentLoaded", init);
 
+let puntos = []
+let myChart;
+
 function init(){
     const btnGraficar = document.getElementById("btn-graficar");
     btnGraficar.addEventListener("click", graficar);
+
+    const btnGenerarPuntos = document.getElementById("btn-generar-puntos");
+    const cantPuntos = document.getElementById("cantPuntos");
+    btnGenerarPuntos.addEventListener("click", (e) => generarPuntos(cantPuntos.value));
 }
 
 async function obtenerCoeficientes(n){
@@ -11,9 +18,7 @@ async function obtenerCoeficientes(n){
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            n: n
-        })
+        body: JSON.stringify({ puntos })
     });
     const res = await req.json();
     return [res.x, res.S, res.puntos];
@@ -25,15 +30,19 @@ function cubicInterpolation(x, coefficients) {
 }
 
 async function graficar(){
+    if(!puntos.length) return Swal.fire({ icon: 'error', text: 'No hay puntos para graficar'});
+
     // Recibe los coeficientes del spline cúbico
     const [x, S, pares] = await obtenerCoeficientes(8);
 
     let xValues = x
     let yValues = S
-    console.log(pares)
 
+ 
     const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
+    if (myChart) myChart.destroy();
+
+    myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: xValues,
@@ -97,8 +106,6 @@ async function graficar(){
             }
         },
     });
-    const tablePuntos = document.getElementById("bodyTablePuntos")
-    mostrarPuntos(pares, tablePuntos)
 }
 
 function mostrarPuntos(puntos, div){
@@ -112,4 +119,30 @@ function mostrarPuntos(puntos, div){
     const tr_y = `<tr class="border-b border-blue-gray-200"><td class="py-3 px-4 text-neutral-400">Y</td>${ys.join(' ')}</tr>`
 
     div.innerHTML = `${tr_x}${tr_y}`;
+}
+
+function generarPuntos(n){
+
+    if(n < 8 || n > 15) return Swal.fire({ icon: 'warning', text: 'La cantidad de puntos debe estar en el rango de 8 a 15'});
+
+    fetch(`/api/generar-puntos?n=${n}`, {
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+    .then(res => res.json() )
+    .then(res_puntos => {
+        if(res_puntos.msg) throw res_puntos;
+        puntos = res_puntos;
+        const tablePuntos = document.getElementById("bodyTablePuntos")
+        mostrarPuntos(res_puntos, tablePuntos)
+    })
+    .catch(err => {
+        console.log(err, puntos)
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: err.msg ?? "Ha ocurrido un error"
+        })
+    })
 }

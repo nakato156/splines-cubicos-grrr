@@ -18,27 +18,34 @@
     <div class="px-4 py-8 md:py-18 lg:px-6">
         <div class="grid grid-cols-6 md:grid-cols-8 gap-2">
             <div class="text-white grid grid-rows-2 col-span-1 md:col-span-2 justify-center">
-                <div>
+                <div class="self-center">
                     <label for="points" class="text-sm font-medium">Numero de puntos</label>
-                    <input
-                        class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[100px]"
-                        id="points" placeholder="0" min="2" type="number">
-                </div>
-                <div class="flex items-center gap-2">
-                    <button
-                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md border-emerald-400 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-emerald-400/70 px-4 py-2 h-[36px]">
-                        Generar Puntos
-                    </button>
+                    <div class="flex">
+                        <input
+                            class="flex w-[65px] h-10 rounded-l-md border border-input text-black px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            id="cantPuntos" placeholder="0" min="8" max="15" type="number" value="0">
+                        <div class="flex items-center gap-2">
+                            <button id="btn-generar-puntos"
+                                class="h-10 inline-flex items-center justify-center whitespace-nowrap rounded-r-md border-emerald-400 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-emerald-400/70 px-4 py-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                                </svg>
+
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="text-white col-span-5 md:col-span-6 justify-start">
-                <div class="flex h-full items-center justify-start">
-                    <div class="overflow-x-auto">
-                        <table class="w-full shadow-md rounded-xl">
-                            <tbody id="bodyTablePuntos" class="text-blue-gray-900">
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="text-white col-span-5 md:col-span-6 justify-center">
+                <div class="flex h-full items-center justify-center">
+                    <!-- <div class="overflow-x-auto"> -->
+                    <table class="w-full shadow-md rounded-xl">
+                        <tbody id="bodyTablePuntos" class="text-blue-gray-900">
+                        </tbody>
+                    </table>
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -71,17 +78,22 @@
             <button id="btn-graficar"
                 class="inline-flex items-center justify-center whitespace-nowrap border border-emerald-400 rounded-md text-sm font-medium transition-colors disabled:opacity-50 text-primary-foreground hover:bg-emerald-400/90 px-4 py-2 h-[36px]">
                 Graficar spline
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
+                  </svg>
+                  
             </button>
         </div>
         <div class="w-[70%] h-[70%] m-auto">
             <canvas id="myChart" class="text-white"></canvas>
         </div>
     </div>
+    <footer>
+
+    </footer>
 </body>
-<footer>
-
-</footer>
-
-</html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{{url_for('static', filename='js/index.js')}}"></script>
+
+</html>
