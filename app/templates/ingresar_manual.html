@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingresar Puntos</title>
+    <link rel="stylesheet" href="/app/estilos/estilos.css"> 
+</head>
+<body>
+
+    <div class="container_n">
+        <h2>Ingrese el valor de n</h2>
+        <div class="lectura_n">
+            <div class="contenedor_label_input">
+                <input type="number" name="valor_n" id="valor_n">
+            </div>
+        </div>
+        
+        <button id="agregarN">Enviar</button>
+
+        <h2>Ingreso de Puntos</h2>
+        
+        <div class="lectura_puntos">
+            <div class="lectura_puntosX">
+                <label for="coordenadaX">Coordenada X:</label>
+                <input type="number" id="coordenadaX">
+            </div>
+            
+            <div class="lectura_puntosY">
+                <label for="coordenadaY">Coordenada Y:</label>
+                <input type="number" id="coordenadaY">
+            </div>
+        </div>
+
+        <div class="botones_de_ingreso">
+            <button id="agregarPunto">Agregar Punto</button>
+            <button id="reiniciarIngreso" style="display: none;">Reingresar</button>
+        </div>
+    </div>
+    
+
+    <div class="container_func" id="container_func" style="display: none;" >
+        <div class="splinesFunc" id="funcSplines" >
+            <button class="tabla" id="mostrarTabla">Mostrar Tabla</button>
+            <button class="interpolacion" id="interpolacion">Interpolar</button> 
+        </div>
+    
+        <div id="puntosIngresados"></div>
+    </div>
+
+</body>
+    <script src="/app//functions/js/funciones.js"></script> 
+</html>

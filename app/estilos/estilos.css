@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+h2 {
+    text-align: center;
+    font-size: 25px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.container_n {
+    margin-left: 25px;
+    margin-top: 20px;
+    border: 1px solid black;
+    width: 35%;
+    padding: 10px;
+    float: left; /* Alinea el contenedor a la izquierda */
+}
+
+.container_func {
+    
+    border: 1px solid black;
+    padding: 10px;
+    float: right; 
+    width: 50%; 
+    margin-top: 20px; 
+    margin-right: 25px;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.lectura_n label {
+    margin-bottom: 20px;
+}
+
+.contenedor_label_input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor_label_input label {
+    margin-right: 10px;
+}
+
+.contenedor_label_input input {
+    width: 100px;
+}
+
+.lectura_puntos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.lectura_puntosX,
+.lectura_puntosY {
+    margin: 0 10px;
+}
+
+.lectura_puntosX label,
+.lectura_puntosY label {
+    margin: 0;
+}
+
+button {
+    display: block;
+    margin: 20px auto 0 auto; 
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.tabla, .interpolacion {
+    display: block;
+    margin: 0 auto; 
+    padding: 5px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px; 
+}
+.tabla button:hover, .interpolacion button:hover {
+    background-color: #45a049;
+}
+
+.splinesFunc {
+    display: flex;
+    margin-top: 50px;
+    justify-content: center; 
+}
+
+.splinesFunc button {
+    margin: 0 5px; 
+}
+
+.botones_de_ingreso {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center; 
+}
+
+.botones_de_ingreso button {
+    margin: 0 10px; 
+}
+
+#puntosIngresados {
+    margin-top: 20px;
+}
+
+.tabla-puntos {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.tabla-puntos th,
+.tabla-puntos td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.tabla-puntos th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.tabla-puntos tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tabla-puntos tr:hover {
+    background-color: #f2f2f2;
+}
