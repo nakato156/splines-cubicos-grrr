@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 let puntos = []
 let myChart;
+let acordeon_activo;
 
 function init(){
     const btnGraficar = document.getElementById("btn-graficar");
@@ -10,9 +11,9 @@ function init(){
     const cantPuntos = document.getElementById("cantPuntos");
     
     const acordeones = document.querySelectorAll(".acordeon");
+    acordeon_activo = acordeones[0];
+    toggleAcordeon(acordeon_activo, acordeon_activo)
 
-    
-    
     function initListeners(){    
         btnGraficar.addEventListener("click", graficar);
         btnGenerarPuntos.addEventListener("click", (e) => generarPuntos(cantPuntos.value));
@@ -20,7 +21,7 @@ function init(){
         acordeones.forEach(acordeon => {
             console.log("holas")
             acordeon.addEventListener("click", (e) => {
-                showAcordeon(acordeon)
+                toggleAcordeon(acordeon, acordeon_activo)
             })
         })
     }
@@ -164,7 +165,12 @@ function generarPuntos(n){
     })
 }
 
-function showAcordeon(acordeon){
+function toggleAcordeon(acordeon, activo){
+    if(acordeon != activo){
+        console.log(activo)
+        toggleAcordeon(activo, activo)
+    }
+    console.log(acordeon)
     const img = acordeon.querySelector("img")
     img.classList.toggle("-rotate-180");
     const contenido_acordeon = acordeon.nextElementSibling;
@@ -172,4 +178,5 @@ function showAcordeon(acordeon){
     contenido_acordeon.classList.toggle("invisible");
     contenido_acordeon.classList.toggle("visible");
     contenido_acordeon.classList.toggle("opacity-100");
+    acordeon_activo = acordeon;
 }
