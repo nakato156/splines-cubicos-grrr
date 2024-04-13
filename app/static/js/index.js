@@ -5,12 +5,29 @@ let myChart;
 
 function init(){
     const btnGraficar = document.getElementById("btn-graficar");
-    btnGraficar.addEventListener("click", graficar);
-
+    
     const btnGenerarPuntos = document.getElementById("btn-generar-puntos");
     const cantPuntos = document.getElementById("cantPuntos");
-    btnGenerarPuntos.addEventListener("click", (e) => generarPuntos(cantPuntos.value));
+    
+    const acordeones = document.querySelectorAll(".acordeon");
+
+    
+    
+    function initListeners(){    
+        btnGraficar.addEventListener("click", graficar);
+        btnGenerarPuntos.addEventListener("click", (e) => generarPuntos(cantPuntos.value));
+
+        acordeones.forEach(acordeon => {
+            console.log("holas")
+            acordeon.addEventListener("click", (e) => {
+                showAcordeon(acordeon)
+            })
+        })
+    }
+
+    initListeners()
 }
+
 
 async function obtenerCoeficientes(n){
     const req = await fetch("/api/interpolar", {
@@ -145,4 +162,14 @@ function generarPuntos(n){
             text: err.msg ?? "Ha ocurrido un error"
         })
     })
+}
+
+function showAcordeon(acordeon){
+    const img = acordeon.querySelector("img")
+    img.classList.toggle("-rotate-180");
+    const contenido_acordeon = acordeon.nextElementSibling;
+    contenido_acordeon.classList.toggle("max-h-screen");
+    contenido_acordeon.classList.toggle("invisible");
+    contenido_acordeon.classList.toggle("visible");
+    contenido_acordeon.classList.toggle("opacity-100");
 }

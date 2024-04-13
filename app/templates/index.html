@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}"> 
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
 </head>
 
 <body
@@ -16,74 +16,116 @@
         </p>
     </header>
     <div class="px-4 py-8 md:py-18 lg:px-6">
-        <div class="grid grid-cols-6 md:grid-cols-8 gap-2">
-            <div class="text-white grid grid-rows-2 col-span-1 md:col-span-2 justify-center">
-                <div class="self-center">
-                    <label for="points" class="text-sm font-medium">Numero de puntos</label>
-                    <div class="flex">
-                        <input
-                            class="flex w-[65px] h-10 rounded-l-md border border-input text-black px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                            id="cantPuntos" placeholder="0" min="8" max="15" type="number" value="0">
-                        <div class="flex items-center gap-2">
-                            <button id="btn-generar-puntos"
-                                class="h-10 inline-flex items-center justify-center whitespace-nowrap rounded-r-md border-emerald-400 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-emerald-400/70 px-4 py-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                                </svg>
+        <section>
+            <div class="m-2 space-y-2">
+                <div class="group flex flex-col gap-2 bg-black text-white" tabindex="1">
+                    <div class="acordeon flex cursor-pointer items-center justify-between bg-rose-500 p-5 rounded-lg">
+                        <span> Generar Autom&aacute;tico </span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Chevron-icon-drop-down-menu-WHITE.png"
+                            class="h-2 w-3 transition-all duration-500" />
+                    </div>
+                    <div
+                        class="px-5 invisible h-auto max-h-0 items-center opacity-0 transition-all duration-1000">
+                        <div class="grid grid-cols-6 md:grid-cols-8 gap-2">
+                            <div class="text-white grid grid-rows-2 col-span-1 md:col-span-2 justify-center">
+                                <div class="self-center">
+                                    <label for="points" class="text-sm font-medium">Numero de puntos</label>
+                                    <div class="flex">
+                                        <input
+                                            class="flex w-[65px] h-10 rounded-l-md border border-input text-black px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                            id="cantPuntos" placeholder="0" min="8" max="15" type="number" value="0">
+                                        <div class="flex items-center gap-2">
+                                            <button id="btn-generar-puntos"
+                                                class="h-10 inline-flex items-center justify-center whitespace-nowrap rounded-r-md border-emerald-400 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-emerald-400/70 px-4 py-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                                                </svg>
 
-                            </button>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-white col-span-5 md:col-span-6 justify-center">
+                                <div class="flex h-full items-center justify-center">
+                                    <!-- <div class="overflow-x-auto"> -->
+                                    <table class="w-full shadow-md rounded-xl">
+                                        <tbody id="bodyTablePuntos" class="text-blue-gray-900">
+                                        </tbody>
+                                    </table>
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group flex flex-col gap-2 bg-black text-white" tabindex="2">
+                    <div class="acordeon flex cursor-pointer items-center justify-between bg-rose-500 rounded-lg p-5">
+                        <span> Ingreso Manual </span>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Chevron-icon-drop-down-menu-WHITE.png"
+                            class="h-2 w-3 transition-all duration-500" />
+                    </div>
+                    <div
+                        class="px-5 invisible bg-black h-auto max-h-0 items-center opacity-0 transition-all duration-1000">
+                        <div>
+                            <div class="container_n">
+                                <h2>Ingrese el valor de n</h2>
+                                <div class="lectura_n">
+                                    <div class="contenedor_label_input">
+                                        <input type="number" name="valor_n" id="valor_n">
+                                    </div>
+                                </div>
+
+                                <button id="agregarN">Enviar</button>
+
+                                <h2>Ingreso de Puntos</h2>
+
+                                <div class="lectura_puntos">
+                                    <div class="lectura_puntosX">
+                                        <label for="coordenadaX">Coordenada X:</label>
+                                        <input type="number" id="coordenadaX">
+                                    </div>
+
+                                    <div class="lectura_puntosY">
+                                        <label for="coordenadaY">Coordenada Y:</label>
+                                        <input type="number" id="coordenadaY">
+                                    </div>
+                                </div>
+
+                                <div class="botones_de_ingreso">
+                                    <button id="agregarPunto">Agregar Punto</button>
+                                    <button id="reiniciarIngreso" style="display: none;">Reingresar</button>
+                                </div>
+                            </div>
+
+                            <div class="container_func" id="container_func" style="display: none;">
+                                <div class="splinesFunc" id="funcSplines">
+                                    <button class="tabla" id="mostrarTabla">Mostrar Tabla</button>
+                                    <button class="interpolacion" id="interpolacion">Interpolar</button>
+                                </div>
+
+                                <div id="puntosIngresados"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-white col-span-5 md:col-span-6 justify-center">
-                <div class="flex h-full items-center justify-center">
-                    <!-- <div class="overflow-x-auto"> -->
-                    <table class="w-full shadow-md rounded-xl">
-                        <tbody id="bodyTablePuntos" class="text-blue-gray-900">
-                        </tbody>
-                    </table>
-                    <!-- </div> -->
-                </div>
-            </div>
-        </div>
-        <div class="container mx-auto prose lg:prose-lg max-w-none text-white">
-            <div class="flex gap-4">
-
-            </div>
-            <div class="flex items-center gap-2 mt-2">
-                <div class="flex items-center">
-                    <label class="mr-2">Condiciones naturales?</label>
-                    <div class="flex items-center">
-                        <input type="radio" id="opcion1" name="radioGroup"
-                            class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" checked>
-                        <label for="opcion1" class="ml-1">Opción 1</label>
-                    </div>
-                    <div class="flex items-center ml-4">
-                        <input type="radio" id="opcion2" name="radioGroup"
-                            class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
-                        <label for="opcion2" class="ml-1">Opción 2</label>
-                    </div>
-                    <div class="flex items-center ml-4">
-                        <input type="radio" id="opcion3" name="radioGroup"
-                            class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500">
-                        <label for="opcion3" class="ml-1">Opción 3</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="text-white flex justify-center items-center">
+        </section>
+        <section class="text-white flex justify-center items-center">
             <button id="btn-graficar"
                 class="inline-flex items-center justify-center whitespace-nowrap border border-emerald-400 rounded-md text-sm font-medium transition-colors disabled:opacity-50 text-primary-foreground hover:bg-emerald-400/90 px-4 py-2 h-[36px]">
                 Graficar spline
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
-                  </svg>
-                  
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
+                </svg>
+
             </button>
-        </div>
+        </section>
         <div class="w-[70%] h-[70%] m-auto">
             <canvas id="myChart" class="text-white"></canvas>
         </div>
