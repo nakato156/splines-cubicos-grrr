@@ -12,7 +12,7 @@ function init(){
     
     const acordeones = document.querySelectorAll(".acordeon");
     acordeon_activo = acordeones[0];
-    toggleAcordeon(acordeon_activo, acordeon_activo)
+    //toggleAcordeon(acordeon_activo, acordeon_activo)
 
     function initListeners(){    
         btnGraficar.addEventListener("click", graficar);
@@ -27,7 +27,8 @@ function init(){
     }
 
     initListeners()
-}
+    toggleAcordeon(acordeon_activo, null);
+} 
 
 
 async function obtenerCoeficientes(n){
@@ -165,18 +166,40 @@ function generarPuntos(n){
     })
 }
 
-function toggleAcordeon(acordeon, activo){
-    if(acordeon != activo){
-        console.log(activo)
-        toggleAcordeon(activo, activo)
-    }
-    console.log(acordeon)
-    const img = acordeon.querySelector("img")
-    img.classList.toggle("-rotate-180");
+function toggleAcordeon(acordeon, activo) {
+    const img = acordeon.querySelector("img");
     const contenido_acordeon = acordeon.nextElementSibling;
-    contenido_acordeon.classList.toggle("max-h-screen");
-    contenido_acordeon.classList.toggle("invisible");
-    contenido_acordeon.classList.toggle("visible");
-    contenido_acordeon.classList.toggle("opacity-100");
-    acordeon_activo = acordeon;
+    
+    //Si el acordeon ingresado es diferente del activo, cerramos el activo:
+    if (acordeon !== activo) {
+        
+        if (activo) {
+            const imgActivo = activo.querySelector("img");
+            const contenido_activo = activo.nextElementSibling;
+            imgActivo.classList.remove("-rotate-180");
+            contenido_activo.classList.remove("max-h-screen", "visible", "opacity-100");
+            contenido_activo.classList.add("invisible");
+        }
+        
+        //Abrimos el actual
+        img.classList.add("-rotate-180");
+        contenido_acordeon.classList.remove("invisible");
+        contenido_acordeon.classList.add("max-h-screen", "visible", "opacity-100");
+        //Lo definimos como el acordeon activo
+        acordeon_activo = acordeon;
+    } 
+    //Si el acordeon activo es igual al acordeon ingresado, lo cerramos.
+    else { 
+        
+        img.classList.toggle("-rotate-180");
+        contenido_acordeon.classList.toggle("max-h-screen");
+        contenido_acordeon.classList.toggle("invisible");
+        contenido_acordeon.classList.toggle("visible");
+        contenido_acordeon.classList.toggle("opacity-100");
+        
+        //Seteamos el acordeon negativo como nulo, osea no hay activo
+        if (!contenido_acordeon.classList.contains("visible")) {
+            acordeon_activo = null;
+        }
+    }
 }

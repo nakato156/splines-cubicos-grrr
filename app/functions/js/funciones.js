@@ -182,11 +182,6 @@ function editarFila(indice) {
     puntos.sort(function(a, b) {
         return a[0] - b[0];
     });
-    
-    
+       
     mostrarPuntosEnTabla();
 }
-
-
-
-

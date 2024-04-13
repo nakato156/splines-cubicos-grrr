@@ -8,7 +8,7 @@ python -m venv env
 Luego se activa el entorno virtual 
 - Windows
 ```bash
-env\Scripts\activate.bat
+env\Scripts\activate.bat 
 ```
 - Linux 
 ```bash

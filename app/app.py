@@ -7,4 +7,4 @@ def create_app():
     app.register_blueprint(pb_routes, url_prefix='/')
     app.register_blueprint(api_routes, url_prefix='/api')
 
-    return app
+    return app 
