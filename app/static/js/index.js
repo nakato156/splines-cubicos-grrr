@@ -30,6 +30,12 @@ function init(){
     toggleAcordeon(acordeon_activo, null);
 } 
 
+document.addEventListener('DOMContentLoaded', function() {
+    var tabla = document.querySelector("#bodyTablePuntos").parentElement;
+    if (tabla) {
+        tabla.classList.add('fade-in');
+    }
+});
 
 async function obtenerCoeficientes(n){
     const req = await fetch("/api/interpolar", {
@@ -48,18 +54,23 @@ function cubicInterpolation(x, coefficients) {
     return coefficients[0] + coefficients[1]*x + coefficients[2]*Math.pow(x, 2) + coefficients[3]*Math.pow(x, 3);
 }
 
-async function graficar(){
-    if(!puntos.length) return Swal.fire({ icon: 'error', text: 'No hay puntos para graficar'});
+async function graficar() {
+    if (!puntos.length) return Swal.fire({ icon: 'error', text: 'No hay puntos para graficar' });
 
     // Recibe los coeficientes del spline cúbico
     const [x, S, pares] = await obtenerCoeficientes(8);
 
-    let xValues = x
-    let yValues = S
+    let xValues = x;
+    let yValues = S;
 
- 
-    const ctx = document.getElementById('myChart').getContext('2d');
+    const canvas = document.getElementById('myChart');
+    const ctx = canvas.getContext('2d');
     if (myChart) myChart.destroy();
+
+
+    canvas.classList.remove('fade-in');  
+    void canvas.offsetWidth;  
+    canvas.classList.add('fade-in');
 
     myChart = new Chart(ctx, {
         type: 'line',
@@ -127,6 +138,7 @@ async function graficar(){
     });
 }
 
+
 function mostrarPuntos(puntos, div){
     let xs = [], ys = [];
     for(const [x, y] of puntos){
@@ -140,31 +152,32 @@ function mostrarPuntos(puntos, div){
     div.innerHTML = `${tr_x}${tr_y}`;
 }
 
-function generarPuntos(n){
-
-    if(n < 8 || n > 15) return Swal.fire({ icon: 'warning', text: 'La cantidad de puntos debe estar en el rango de 8 a 15'});
+function generarPuntos(n) {
+    if (n < 8 || n > 15) return Swal.fire({ icon: 'warning', text: 'La cantidad de puntos debe estar en el rango de 8 a 15' });
 
     fetch(`/api/generar-puntos?n=${n}`, {
         headers: {
             "Content-Type": "application/json"
         },
     })
-    .then(res => res.json() )
+    .then(res => res.json())
     .then(res_puntos => {
-        if(res_puntos.msg) throw res_puntos;
+        if (res_puntos.msg) throw res_puntos;
         puntos = res_puntos;
-        const tablePuntos = document.getElementById("bodyTablePuntos")
-        mostrarPuntos(res_puntos, tablePuntos)
+        const tablePuntos = document.getElementById("bodyTablePuntos");
+        mostrarPuntos(res_puntos, tablePuntos);
+        tablePuntos.classList.add('fade-in');
     })
     .catch(err => {
-        console.log(err, puntos)
+        console.log(err, puntos);
         Swal.fire({
             icon: 'error',
             title: 'Error',
             text: err.msg ?? "Ha ocurrido un error"
-        })
-    })
+        });
+    });
 }
+
 
 function toggleAcordeon(acordeon, activo) {
     const img = acordeon.querySelector("img");
