@@ -184,12 +184,18 @@ function generarPuntos(n) {
 }
 
 function agregarPunto(x, y, tablePuntos) {
+        
+    if(puntosManual.some(punto => punto[0] === x))
+        return Swal.fire({ icon: 'warning', text: 'El punto ya existe en el eje x' });
+    
     puntosManual.push([x, y]);
+    
     if(puntos.length){
         tablePuntos.querySelector(".filaX").innerHTML = `<tr class="border-b border-blue-gray-200 filaX"><td class="py-3 px-4 text-neutral-400">X</td></tr>`
         tablePuntos.querySelector(".filaY").innerHTML = `<tr class="border-b border-blue-gray-200 filaX"><td class="py-3 px-4 text-neutral-400">X</td></tr>`
         puntos = []
     }
+
     if(!tablePuntos.classList.contains('fade-in')) {
         const tr_x = `<tr class="border-b border-blue-gray-200 filaX"><td class="py-3 px-4 text-neutral-400">X</td><td class="py-3 px-4">${x}</td></tr>`
         const tr_y = `<tr class="border-b border-blue-gray-200 filaY"><td class="py-3 px-4 text-neutral-400">Y</td><td class="py-3 px-4">${x}</td></tr>`
