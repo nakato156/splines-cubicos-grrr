@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", init);
 
-let puntos = []
+let puntos = [], puntosManual = []
 let myChart;
 let acordeon_activo;
 
@@ -12,10 +12,11 @@ function init(){
     
     const acordeones = document.querySelectorAll(".acordeon");
     acordeon_activo = acordeones[0];
-    //toggleAcordeon(acordeon_activo, acordeon_activo)
 
-    function initListeners(){    
-        btnGraficar.addEventListener("click", graficar);
+    const formManual = document.getElementById("formManual");
+
+    function initListeners(tablePuntos){    
+        btnGraficar.addEventListener("click", (e) => graficar(acordeon_activo.classList.contains("random") ? puntos : puntosManual));
         btnGenerarPuntos.addEventListener("click", (e) => generarPuntos(cantPuntos.value));
 
         acordeones.forEach(acordeon => {
@@ -24,20 +25,25 @@ function init(){
                 toggleAcordeon(acordeon, acordeon_activo)
             })
         })
+
+        formManual.addEventListener("submit", (e) => {
+            const form = new FormData(formManual);
+            e.preventDefault();
+            agregarPunto(parseInt(form.get("x")), parseInt(form.get("y")), tablePuntos);
+        })
     }
 
-    initListeners()
+    const tablePuntos = document.getElementById("bodyTablePuntos");
+    initListeners(tablePuntos)
     toggleAcordeon(acordeon_activo, null);
 } 
 
 document.addEventListener('DOMContentLoaded', function() {
-    var tabla = document.querySelector("#bodyTablePuntos").parentElement;
-    if (tabla) {
-        tabla.classList.add('fade-in');
-    }
+    const tabla = document.querySelector("#bodyTablePuntos").parentElement;
+    if (tabla) tabla.classList.add('fade-in');
 });
 
-async function obtenerCoeficientes(n){
+async function obtenerCoeficientes(puntos){
     const req = await fetch("/api/interpolar", {
         method: "POST",
         headers: {
@@ -54,11 +60,11 @@ function cubicInterpolation(x, coefficients) {
     return coefficients[0] + coefficients[1]*x + coefficients[2]*Math.pow(x, 2) + coefficients[3]*Math.pow(x, 3);
 }
 
-async function graficar() {
+async function graficar(puntos) {
     if (!puntos.length) return Swal.fire({ icon: 'error', text: 'No hay puntos para graficar' });
 
     // Recibe los coeficientes del spline cúbico
-    const [x, S, pares] = await obtenerCoeficientes(8);
+    const [x, S, pares] = await obtenerCoeficientes(puntos);
 
     let xValues = x;
     let yValues = S;
@@ -138,7 +144,6 @@ async function graficar() {
     });
 }
 
-
 function mostrarPuntos(puntos, div){
     let xs = [], ys = [];
     for(const [x, y] of puntos){
@@ -146,8 +151,8 @@ function mostrarPuntos(puntos, div){
         ys.push(`<td class="py-3 px-4">${y}</td>`)
     }
 
-    const tr_x = `<tr class="border-b border-blue-gray-200"><td class="py-3 px-4 text-neutral-400">X</td>${xs.join(' ')}</tr>`
-    const tr_y = `<tr class="border-b border-blue-gray-200"><td class="py-3 px-4 text-neutral-400">Y</td>${ys.join(' ')}</tr>`
+    const tr_x = `<tr class="border-b border-blue-gray-200 filaX"><td class="py-3 px-4 text-neutral-400">X</td>${xs.join(' ')}</tr>`
+    const tr_y = `<tr class="border-b border-blue-gray-200 filaY"><td class="py-3 px-4 text-neutral-400">Y</td>${ys.join(' ')}</tr>`
 
     div.innerHTML = `${tr_x}${tr_y}`;
 }
@@ -178,6 +183,24 @@ function generarPuntos(n) {
     });
 }
 
+function agregarPunto(x, y, tablePuntos) {
+    puntosManual.push([x, y]);
+    if(puntos.length){
+        tablePuntos.querySelector(".filaX").innerHTML = `<tr class="border-b border-blue-gray-200 filaX"><td class="py-3 px-4 text-neutral-400">X</td></tr>`
+        tablePuntos.querySelector(".filaY").innerHTML = `<tr class="border-b border-blue-gray-200 filaX"><td class="py-3 px-4 text-neutral-400">X</td></tr>`
+        puntos = []
+    }
+    if(!tablePuntos.classList.contains('fade-in')) {
+        const tr_x = `<tr class="border-b border-blue-gray-200 filaX"><td class="py-3 px-4 text-neutral-400">X</td><td class="py-3 px-4">${x}</td></tr>`
+        const tr_y = `<tr class="border-b border-blue-gray-200 filaY"><td class="py-3 px-4 text-neutral-400">Y</td><td class="py-3 px-4">${x}</td></tr>`
+
+        tablePuntos.innerHTML = `${tr_x}${tr_y}`;
+        tablePuntos.classList.add('fade-in');
+    }else{
+        tablePuntos.querySelector(".filaX").innerHTML+=`<td class="py-3 px-4">${x}</td>`
+        tablePuntos.querySelector(".filaY").innerHTML+=`<td class="py-3 px-4">${y}</td>`
+    }
+}
 
 function toggleAcordeon(acordeon, activo) {
     const img = acordeon.querySelector("img");
@@ -185,7 +208,6 @@ function toggleAcordeon(acordeon, activo) {
     
     //Si el acordeon ingresado es diferente del activo, cerramos el activo:
     if (acordeon !== activo) {
-        
         if (activo) {
             const imgActivo = activo.querySelector("img");
             const contenido_activo = activo.nextElementSibling;
@@ -198,12 +220,11 @@ function toggleAcordeon(acordeon, activo) {
         img.classList.add("-rotate-180");
         contenido_acordeon.classList.remove("invisible");
         contenido_acordeon.classList.add("max-h-screen", "visible", "opacity-100");
+        
         //Lo definimos como el acordeon activo
         acordeon_activo = acordeon;
     } 
-    //Si el acordeon activo es igual al acordeon ingresado, lo cerramos.
-    else { 
-        
+    else { //Si el acordeon activo es igual al acordeon ingresado, lo cerramos.
         img.classList.toggle("-rotate-180");
         contenido_acordeon.classList.toggle("max-h-screen");
         contenido_acordeon.classList.toggle("invisible");
