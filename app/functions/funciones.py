@@ -23,7 +23,7 @@ def generacionParesOrdenados(n:int) -> np.ndarray:
     i_pares = np.argsort(pares[:, 0])
     return pares[i_pares]
 
-def interpolacion(pares:np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def interpolacion(pares:np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     x, y = pares[:, 0], pares[:, 1]
     sc = CubicSpline(x, y)
 
@@ -41,4 +41,14 @@ def interpolacion(pares:np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     # ax.legend(loc='lower left', ncol=2)
     # plt.savefig("interpolacion.png")
 
-    return xs, S
+    return xs, S, sc.c
+
+def to_latex(coefs, xs) -> str:
+    funciones = []
+    for i in range(len(coefs[0])):
+        polinomio =  ' + '.join((f"{coef}x^{3 - x}" if 3-x != 0 else f"{coef}") for x, coef in enumerate(coefs[:, i])).replace("+ -", "-")
+        inicio, final = xs[i:i+2]
+        rango = ", & \\text{si } x \\in" + f" {'(' if i > 0 else '['}{inicio} , {final}]"
+        funciones.append(polinomio + rango)
+    
+    return "f(x) = \\begin{cases} " + ' \\\\ '.join(funciones) + " \\end{cases}"

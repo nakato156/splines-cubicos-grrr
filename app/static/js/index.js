@@ -3,8 +3,11 @@ document.addEventListener("DOMContentLoaded", init);
 let puntos = [], puntosManual = []
 let myChart;
 let acordeon_activo;
+let funcionS = null;
 
 function init(){
+    funcionS = document.getElementById("funcionS")
+
     const btnGraficar = document.getElementById("btn-graficar");
     
     const btnGenerarPuntos = document.getElementById("btn-generar-puntos");
@@ -52,7 +55,7 @@ async function obtenerCoeficientes(puntos){
         body: JSON.stringify({ puntos })
     });
     const res = await req.json();
-    return [res.x, res.S, res.puntos];
+    return [res.x, res.S, res.puntos, res.funcion];
 }
 
 // Reconstruye la función de interpolación
@@ -64,7 +67,11 @@ async function graficar(puntos) {
     if (!puntos.length) return Swal.fire({ icon: 'error', text: 'No hay puntos para graficar' });
 
     // Recibe los coeficientes del spline cúbico
-    const [x, S, pares] = await obtenerCoeficientes(puntos);
+    const [x, S, pares, func] = await obtenerCoeficientes(puntos);
+
+    // poner la funcion en KaTeX
+    console.log(func)
+    renderKaTeX(func, funcionS)
 
     let xValues = x;
     let yValues = S;
@@ -242,4 +249,10 @@ function toggleAcordeon(acordeon, activo) {
             acordeon_activo = null;
         }
     }
+}
+
+function renderKaTeX(string, element){
+    katex.render(string, element, {
+        throwOnError: false,
+    })
 }

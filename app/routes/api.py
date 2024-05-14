@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from ..functions import interpolacion, generacionParesOrdenados
+from ..functions import interpolacion, generacionParesOrdenados, to_latex
 import numpy as np
 
 api_routes = Blueprint('api', __name__, url_prefix='/api')
@@ -27,5 +27,5 @@ def interpolar():
     except:
         return {"msg": "No se pudo procesar el formato de los puntos"}, 400
 
-    xs, S = interpolacion(pares)
-    return jsonify({ "S": S.tolist(), "x": xs.tolist(), "puntos": pares.tolist()})
+    xs, S, coef = interpolacion(pares)
+    return jsonify({ "S": S.tolist(), "x": xs.tolist(), "puntos": pares.tolist(), "funcion": to_latex(coef, pares[:, 0])})
