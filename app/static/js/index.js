@@ -165,7 +165,7 @@ function mostrarPuntos(puntos, div){
 }
 
 function generarPuntos(n) {
-    if (n < 8 || n > 15) return Swal.fire({ icon: 'warning', text: 'La cantidad de puntos debe estar en el rango de 8 a 15' });
+    if (n < 8 || n > 12) return Swal.fire({ icon: 'warning', text: 'La cantidad de puntos debe estar en el rango de 8 a 12' });
 
     fetch(`/api/generar-puntos?n=${n}`, {
         headers: {
@@ -191,7 +191,12 @@ function generarPuntos(n) {
 }
 
 function agregarPunto(x, y, tablePuntos) {
-        
+    
+    if (puntosManual.length >= 12) {
+        Swal.fire({ icon: 'warning', text: 'Se ha alcanzado el máximo de 12 puntos.' });
+        return;
+    }
+
     if(puntosManual.some(punto => punto[0] === x))
         return Swal.fire({ icon: 'warning', text: 'El punto ya existe en el eje x' });
     
