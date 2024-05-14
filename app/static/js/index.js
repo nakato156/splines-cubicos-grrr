@@ -58,11 +58,6 @@ async function obtenerCoeficientes(puntos){
     return [res.x, res.S, res.puntos, res.funcion];
 }
 
-// Reconstruye la función de interpolación
-function cubicInterpolation(x, coefficients) {
-    return coefficients[0] + coefficients[1]*x + coefficients[2]*Math.pow(x, 2) + coefficients[3]*Math.pow(x, 3);
-}
-
 async function graficar(puntos) {
     if (!puntos.length) return Swal.fire({ icon: 'error', text: 'No hay puntos para graficar' });
 
@@ -210,7 +205,7 @@ function agregarPunto(x, y, tablePuntos) {
 
     if(!tablePuntos.classList.contains('fade-in')) {
         const tr_x = `<tr class="border-b border-blue-gray-200 filaX"><td class="py-3 px-4 text-neutral-400">X</td><td class="py-3 px-4">${x}</td></tr>`
-        const tr_y = `<tr class="border-b border-blue-gray-200 filaY"><td class="py-3 px-4 text-neutral-400">Y</td><td class="py-3 px-4">${x}</td></tr>`
+        const tr_y = `<tr class="border-b border-blue-gray-200 filaY"><td class="py-3 px-4 text-neutral-400">Y</td><td class="py-3 px-4">${y}</td></tr>`
 
         tablePuntos.innerHTML = `${tr_x}${tr_y}`;
         tablePuntos.classList.add('fade-in');
