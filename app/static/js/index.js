@@ -60,6 +60,7 @@ async function obtenerCoeficientes(puntos){
 
 async function graficar(puntos) {
     if (!puntos.length) return Swal.fire({ icon: 'error', text: 'No hay puntos para graficar' });
+    if (puntos.length < 8) return Swal.fire({ icon: 'error', text: 'No hay suficientes puntos para graficar' });
 
     // Recibe los coeficientes del spline cúbico
     const [x, S, pares, func] = await obtenerCoeficientes(puntos);
