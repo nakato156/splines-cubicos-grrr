@@ -25,7 +25,7 @@ def generacionParesOrdenados(n:int) -> np.ndarray:
 
 def interpolacion(pares:np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     x, y = pares[:, 0], pares[:, 1]
-    sc = CubicSpline(x, y)
+    sc = CubicSpline(x, y, bc_type='natural', axis=0)
 
     p_min, p_max = x[0], x[-1]
     xs = np.arange(p_min, p_max + 0.1, 0.1)
